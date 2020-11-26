@@ -1,0 +1,5 @@
+Running: xsim.dir/transcodeur_7_seg_behav/xsimk.exe -simmode gui -wdb transcodeur_7_seg_behav.wdb -simrunnum 0 -socket 64677
+Design successfully loaded
+Design Loading CPU Usage: 155 ms
+Simulation completed
+Simulation CPU Usage: 187 ms
