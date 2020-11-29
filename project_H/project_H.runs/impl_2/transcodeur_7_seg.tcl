@@ -45,11 +45,14 @@ proc step_failed { step } {
 set_msg_config -id {HDL 9-1061} -limit 100000
 set_msg_config -id {HDL 9-1654} -limit 100000
 set_msg_config -id {Labtools 27-147} -limit 4294967295
+set_msg_config -id {Synth 8-256} -limit 10000
+set_msg_config -id {Synth 8-638} -limit 10000
 
 start_step write_bitstream
 set rc [catch {
   create_msg_db write_bitstream.pb
   set_param gui.test TreeTableDev
+  set_param xicom.use_bs_reader 1
   open_checkpoint transcodeur_7_seg_routed.dcp
   write_bitstream -force transcodeur_7_seg.bit 
   if { [file exists C:/Users/Pierre-Olivier/Documents/GitHub/Projet_horloge/project_H/project_H.runs/synth_2/transcodeur_7_seg.hwdef] } {

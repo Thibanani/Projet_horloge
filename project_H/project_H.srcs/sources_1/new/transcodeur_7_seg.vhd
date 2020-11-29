@@ -39,32 +39,40 @@ end transcodeur_7_seg;
 
 architecture Behavioral of transcodeur_7_seg is  
 
+signal seg : STD_LOGIC_VECTOR (6 downto 0);
+signal commun : STD_LOGIC_VECTOR (3 downto 0);
+
 begin
 
 process (sw_in)
 begin
-    n_commun <= "1111";
+    commun <= "1111";
     case (sw_in) is
+        when "0000" =>
+            seg <= "0111111";
         when "0001" => 
-            n_seg <= "0000110";
+            seg <= "0000110";
         when "0010" =>
-            n_seg <= "1011011";
+            seg <= "1011011";
         when "0011" =>
-            n_seg <= "1001111";
+            seg <= "1001111";
         when "0100" =>
-            n_seg <= "1100110";
+            seg <= "1100110";
         when "0101" =>
-            n_seg <= "1101101";
+            seg <= "1101101";
         when "0110" =>
-            n_seg <= "1111100";
+            seg <= "1111100";
         when "0111" =>
-            n_seg <= "0000111";
+            seg <= "0000111";
         when "1000" =>
-            n_seg <= "1111111";
+            seg <= "1111111";
         when "1001" =>
-            n_seg <= "1101111";
+            seg <= "1101111";
         when others =>
-            n_seg <= "0111111";       
+            seg <= "1111001";      
     end case;
+    n_seg <= not(seg);
+    n_commun <= not(commun); 
 end process;
+
 end Behavioral;

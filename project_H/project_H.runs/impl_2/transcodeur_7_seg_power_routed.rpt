@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date             : Thu Nov 26 17:18:49 2020
+| Date             : Sun Nov 29 21:00:57 2020
 | Host             : POC running 64-bit major release  (build 9200)
 | Command          : 
 | Design           : transcodeur_7_seg
@@ -30,13 +30,13 @@ Table of Contents
 ----------
 
 +--------------------------+-------+
-| Total On-Chip Power (W)  | 5.764 |
-| Dynamic (W)              | 5.669 |
-| Device Static (W)        | 0.095 |
+| Total On-Chip Power (W)  | 6.376 |
+| Dynamic (W)              | 6.276 |
+| Device Static (W)        | 0.099 |
 | Total Off-Chip Power (W) | 0.000 |
 | Effective TJA (C/W)      | 5.0   |
-| Max Ambient (C)          | 56.2  |
-| Junction Temperature (C) | 53.8  |
+| Max Ambient (C)          | 53.1  |
+| Junction Temperature (C) | 56.9  |
 | Confidence Level         | Low   |
 | Setting File             | ---   |
 | Simulation Activity File | ---   |
@@ -50,13 +50,13 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Slice Logic    |     0.015 |        8 |       --- |             --- |
-|   LUT as Logic |     0.015 |        4 |     20800 |            0.01 |
+| Slice Logic    |     0.016 |        8 |       --- |             --- |
+|   LUT as Logic |     0.016 |        4 |     20800 |            0.01 |
 |   Others       |     0.000 |        1 |       --- |             --- |
-| Signals        |     0.039 |       11 |       --- |             --- |
-| I/O            |     5.614 |       15 |       106 |           14.15 |
-| Static Power   |     0.095 |          |           |                 |
-| Total          |     5.764 |          |           |                 |
+| Signals        |     0.040 |       11 |       --- |             --- |
+| I/O            |     6.221 |       15 |       106 |           14.15 |
+| Static Power   |     0.099 |          |           |                 |
+| Total          |     6.376 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -66,9 +66,9 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.099 |       0.071 |      0.029 |
-| Vccaux    |       1.800 |     0.220 |       0.205 |      0.015 |
-| Vcco33    |       3.300 |     1.586 |       1.585 |      0.001 |
+| Vccint    |       1.000 |     0.104 |       0.072 |      0.032 |
+| Vccaux    |       1.800 |     0.242 |       0.227 |      0.015 |
+| Vcco33    |       3.300 |     1.757 |       1.756 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
@@ -133,7 +133,7 @@ Table of Contents
 +-------------------+-----------+
 | Name              | Power (W) |
 +-------------------+-----------+
-| transcodeur_7_seg |     5.669 |
+| transcodeur_7_seg |     6.276 |
 +-------------------+-----------+
 
 

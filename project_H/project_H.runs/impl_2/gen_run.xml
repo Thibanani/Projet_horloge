@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1606407486">
+<GenRun Id="impl_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1606680030">
   <File Type="RUN-CONSTRS" Name="$PDATADIR/runs/impl_2/constrs_in.xml"/>
   <File Type="PWROPT-DCP" Name="transcodeur_7_seg_pwropt.dcp"/>
   <File Type="RUN-STRAT" Name="$PDATADIR/runs/impl_2/impl_2.psg"/>
+  <File Type="OPT-DRC" Name="transcodeur_7_seg_drc_opted.rpt"/>
   <File Type="ROUTE-TIMING-PB" Name="transcodeur_7_seg_timing_summary_routed.pb"/>
   <File Type="PA-TCL" Name="transcodeur_7_seg.tcl"/>
-  <File Type="OPT-DRC" Name="transcodeur_7_seg_drc_opted.rpt"/>
   <File Type="OPT-DCP" Name="transcodeur_7_seg_opt.dcp"/>
   <File Type="PWROPT-DRC" Name="transcodeur_7_seg_drc_pwropted.rpt"/>
   <File Type="PLACE-DCP" Name="transcodeur_7_seg_placed.dcp"/>
@@ -30,8 +30,8 @@
   <File Type="ROUTE-SIMILARITY" Name="transcodeur_7_seg_incremental_reuse_routed.rpt"/>
   <File Type="POSTROUTE-PHYSOPT-DCP" Name="transcodeur_7_seg_postroute_physopt.dcp"/>
   <File Type="POSTROUTE-PHYSOPT-TIMING" Name="transcodeur_7_seg_timing_summary_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="transcodeur_7_seg_timing_summary_postroute_physopted.pb"/>
   <File Type="RDI-RDI" Name="transcodeur_7_seg.vdi"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="transcodeur_7_seg_timing_summary_postroute_physopted.pb"/>
   <File Type="BG-BIT" Name="transcodeur_7_seg.bit"/>
   <File Type="BG-BIN" Name="transcodeur_7_seg.bin"/>
   <File Type="BITSTR-MSK" Name="transcodeur_7_seg.msk"/>

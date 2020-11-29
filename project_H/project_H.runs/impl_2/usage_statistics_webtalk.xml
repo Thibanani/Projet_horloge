@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<webTalkData  fileName='C:/Users/Pierre-Olivier/Documents/GitHub/Projet_horloge/project_H/project_H.runs/impl_2/usage_statistics_webtalk.xml'  majorVersion='1' minorVersion='0' timeStamp='Thu Nov 26 17:24:41 2020'>
+<webTalkData  fileName='C:/Users/Pierre-Olivier/Documents/GitHub/Projet_horloge/project_H/project_H.runs/impl_2/usage_statistics_webtalk.xml'  majorVersion='1' minorVersion='0' timeStamp='Sun Nov 29 21:01:59 2020'>
 <section name="__ROOT__" level="0" order="1" description="">
  <section name="software_version_and_target_device" level="1" order="1" description="">
   <keyValuePair key="beta" value="FALSE" description="" />
   <keyValuePair key="build_version" value="932637" description="" />
-  <keyValuePair key="date_generated" value="Thu Nov 26 17:24:41 2020" description="" />
+  <keyValuePair key="date_generated" value="Sun Nov 29 21:01:59 2020" description="" />
   <keyValuePair key="os_platform" value="WIN64" description="" />
   <keyValuePair key="product_version" value="Vivado v2014.2 (64-bit)" description="" />
-  <keyValuePair key="project_id" value="61ea68ffc1a74cc29b076c1fec0924d6" description="" />
+  <keyValuePair key="project_id" value="374eef936860495787220f571cc4c835" description="" />
   <keyValuePair key="project_iteration" value="0" description="" />
   <keyValuePair key="random_id" value="38714f88bfd95267ad742ea25b6d3a20" description="" />
   <keyValuePair key="registration_id" value="212079094_0_0_701" description="" />
@@ -43,7 +43,7 @@
    <keyValuePair key="movable_instances" value="23" description="" />
    <keyValuePair key="nets" value="27" description="" />
    <keyValuePair key="pins" value="66" description="" />
-   <keyValuePair key="placer_runtime" value="0.308000" description="" />
+   <keyValuePair key="placer_runtime" value="0.304000" description="" />
    <keyValuePair key="placer_timing_driven" value="1" description="" />
    <keyValuePair key="pll" value="0" description="" />
    <keyValuePair key="threads" value="2" description="" />
@@ -261,7 +261,7 @@
  </section>
  <section name="router" level="1" order="5" description="">
   <section name="usage" level="2" order="1" description="">
-   <keyValuePair key="actual_expansions" value="5344" description="" />
+   <keyValuePair key="actual_expansions" value="4747" description="" />
    <keyValuePair key="bogomips" value="0" description="" />
    <keyValuePair key="bram18" value="0" description="" />
    <keyValuePair key="bram36" value="0" description="" />
@@ -280,7 +280,7 @@
    <keyValuePair key="nets" value="27" description="" />
    <keyValuePair key="pins" value="66" description="" />
    <keyValuePair key="pll" value="0" description="" />
-   <keyValuePair key="router_runtime" value="12.824000" description="" />
+   <keyValuePair key="router_runtime" value="12.905000" description="" />
    <keyValuePair key="router_timing_driven" value="1" description="" />
    <keyValuePair key="threads" value="2" description="" />
    <keyValuePair key="timing_constraints_exist" value="1" description="" />
@@ -288,16 +288,16 @@
  </section>
  <section name="unisim_transformation" level="1" order="6" description="">
   <section name="post_unisim_transformation" level="2" order="1" description="">
+   <keyValuePair key="gnd" value="1" description="" />
    <keyValuePair key="ibuf" value="4" description="" />
    <keyValuePair key="lut4" value="7" description="" />
    <keyValuePair key="obuf" value="11" description="" />
-   <keyValuePair key="vcc" value="1" description="" />
   </section>
   <section name="pre_unisim_transformation" level="2" order="2" description="">
+   <keyValuePair key="gnd" value="1" description="" />
    <keyValuePair key="ibuf" value="4" description="" />
    <keyValuePair key="lut4" value="7" description="" />
    <keyValuePair key="obuf" value="11" description="" />
-   <keyValuePair key="vcc" value="1" description="" />
   </section>
  </section>
  <section name="vivado_usage" level="1" order="7" description="">
