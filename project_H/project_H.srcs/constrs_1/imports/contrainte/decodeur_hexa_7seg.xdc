@@ -8,14 +8,14 @@
 #	set_property IOSTANDARD LVCMOS33 [get_ports clk]
  
 # Switches
-set_property PACKAGE_PIN V17 [get_ports sw_in[0]]					
-	set_property IOSTANDARD LVCMOS33 [get_ports sw_in[0]]
-set_property PACKAGE_PIN V16 [get_ports sw_in[1]]					
-	set_property IOSTANDARD LVCMOS33 [get_ports sw_in[1]]
-set_property PACKAGE_PIN W16 [get_ports sw_in[2]]					
-	set_property IOSTANDARD LVCMOS33 [get_ports sw_in[2]]
-set_property PACKAGE_PIN W17 [get_ports sw_in[3]]					
-	set_property IOSTANDARD LVCMOS33 [get_ports sw_in[3]]
+set_property PACKAGE_PIN V17 [get_ports sw_aff[0]]					
+	set_property IOSTANDARD LVCMOS33 [get_ports sw_aff[0]]
+set_property PACKAGE_PIN V16 [get_ports sw_aff[1]]					
+	set_property IOSTANDARD LVCMOS33 [get_ports sw_aff[1]]
+#set_property PACKAGE_PIN W16 [get_ports sw_in[2]]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports sw_in[2]]
+#set_property PACKAGE_PIN W17 [get_ports sw_in[3]]					
+	#set_property IOSTANDARD LVCMOS33 [get_ports sw_in[3]]
 #set_property PACKAGE_PIN W15 [get_ports {sw[4]}]					
 #	set_property IOSTANDARD LVCMOS33 [get_ports {sw[4]}]
 #set_property PACKAGE_PIN V15 [get_ports {sw[5]}]					
@@ -43,8 +43,8 @@ set_property PACKAGE_PIN W17 [get_ports sw_in[3]]
  
 
 # LEDs
-#set_property PACKAGE_PIN U16 [get_ports {led[0]}]					
-#	set_property IOSTANDARD LVCMOS33 [get_ports {led[0]}]
+set_property PACKAGE_PIN U16 [get_ports {hz1_en}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {hz1_en}]
 #set_property PACKAGE_PIN E19 [get_ports {led[1]}]					
 #	set_property IOSTANDARD LVCMOS33 [get_ports {led[1]}]
 #set_property PACKAGE_PIN U19 [get_ports {led[2]}]					

@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Sun Nov 29 21:00:56 2020
+| Date         : Thu Dec 03 16:07:49 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -warn_on_violation -file transcodeur_7_seg_timing_summary_routed.rpt -pb transcodeur_7_seg_timing_summary_routed.pb
 | Design       : transcodeur_7_seg
@@ -51,7 +51,7 @@ Table of Contents
 
 1. checking no_clock
 --------------------
- There are 0 register/latch pins with no clock.
+ There are 28 register/latch pins with no clock driven by root clock pin: clk (HIGH)
 
 
 2. checking constant clock
@@ -66,21 +66,21 @@ Table of Contents
 
 4. checking unconstrained_internal_endpoints
 --------------------------------------------
- There are 0 pins that are not constrained for maximum delay.
+ There are 28 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
 
 5. checking no_input_delay
 --------------------------
- There are 0 input ports with no input delay specified.
+ There is 1 input port with no input delay specified. (HIGH)
 
  There are 0 input ports with no input delay but user has a false path constraint.
 
 
 6. checking no_output_delay
 ---------------------------
- There are 0 ports with no output delay specified.
+ There is 1 port with no output delay specified. (HIGH)
 
  There are 0 ports with no output delay but user has a false path constraint
 
