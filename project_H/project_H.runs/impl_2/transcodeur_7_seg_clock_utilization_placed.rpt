@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Thu Dec 03 16:07:35 2020
+| Date         : Thu Dec 03 17:44:28 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_clock_utilization -file transcodeur_7_seg_clock_utilization_placed.rpt
 | Design       : transcodeur_7_seg
@@ -45,7 +45,7 @@ Table of Contents
 +-------+--------------------+---------------+------+-------+-------+---------------+-----------+
 | Index | BUFG Cell          | Net Name      | BELs | Sites | Fixed | MaxDelay (ns) | Skew (ns) |
 +-------+--------------------+---------------+------+-------+-------+---------------+-----------+
-|     1 | clk_IBUF_BUFG_inst | clk_IBUF_BUFG |   28 |     8 |    no |         1.727 |     0.142 |
+|     1 | clk_IBUF_BUFG_inst | clk_IBUF_BUFG |   28 |     8 |    no |         1.718 |     0.145 |
 +-------+--------------------+---------------+------+-------+-------+---------------+-----------+
 
 
@@ -91,7 +91,7 @@ Table of Contents
 
 
 # Location of BUFG Primitives 
-set_property LOC BUFGCTRL_X0Y16 [get_cells clk_IBUF_BUFG_inst]
+set_property LOC BUFGCTRL_X0Y0 [get_cells clk_IBUF_BUFG_inst]
 
 # Location of IO Clock Primitives
 
@@ -108,9 +108,9 @@ set_property LOC BUFGCTRL_X0Y16 [get_cells clk_IBUF_BUFG_inst]
 # Location of IO Primitives which is load of clock spine
 
 # Location of clock ports
-set_property LOC IOB_X1Y76 [get_ports clk]
+set_property LOC IOB_X1Y26 [get_ports clk]
 
-# Clock net "clk_IBUF_BUFG" driven by instance "clk_IBUF_BUFG_inst" located at site "BUFGCTRL_X0Y16"
+# Clock net "clk_IBUF_BUFG" driven by instance "clk_IBUF_BUFG_inst" located at site "BUFGCTRL_X0Y0"
 #startgroup
 create_pblock CLKAG_clk_IBUF_BUFG
 add_cells_to_pblock [get_pblocks  CLKAG_clk_IBUF_BUFG] [get_cells  -filter { IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="clk_IBUF_BUFG"}]]]

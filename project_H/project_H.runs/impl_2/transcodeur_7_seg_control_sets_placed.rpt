@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Thu Dec 03 16:07:35 2020
+| Date         : Thu Dec 03 17:44:28 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file transcodeur_7_seg_control_sets_placed.rpt
 | Design       : transcodeur_7_seg
@@ -22,8 +22,8 @@ Table of Contents
 +-------------------------------------------------------------------+-------+
 |                               Status                              | Count |
 +-------------------------------------------------------------------+-------+
-| Number of unique control sets                                     |     1 |
-| Minimum Number of register sites lost to control set restrictions |     4 |
+| Number of unique control sets                                     |     2 |
+| Minimum Number of register sites lost to control set restrictions |    12 |
 +-------------------------------------------------------------------+-------+
 
 
@@ -33,9 +33,9 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              28 |            8 |
+| No           | No                    | No                     |               1 |            1 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |               0 |            0 |
+| No           | Yes                   | No                     |              27 |            7 |
 | Yes          | No                    | No                     |               0 |            0 |
 | Yes          | No                    | Yes                    |               0 |            0 |
 | Yes          | Yes                   | No                     |               0 |            0 |
@@ -48,7 +48,8 @@ Table of Contents
 +----------------+---------------+------------------+------------------+----------------+
 |  Clock Signal  | Enable Signal | Set/Reset Signal | Slice Load Count | Bel Load Count |
 +----------------+---------------+------------------+------------------+----------------+
-|  clk_IBUF_BUFG |               |                  |                8 |             28 |
+|  clk_IBUF_BUFG |               |                  |                1 |              1 |
+|  clk_IBUF_BUFG |               | clear            |                7 |             27 |
 +----------------+---------------+------------------+------------------+----------------+
 
 

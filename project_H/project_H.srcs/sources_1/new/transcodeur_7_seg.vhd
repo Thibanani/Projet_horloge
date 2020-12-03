@@ -34,7 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity transcodeur_7_seg is
     Port ( sw_aff : in STD_LOGIC_VECTOR (1 downto 0);
            clk : in STD_LOGIC; 
-           hz1_en : out STD_LOGIC;
+           clkhz : out STD_LOGIC;
            n_seg : out STD_LOGIC_VECTOR (6 downto 0);
            n_commun : out STD_LOGIC_VECTOR (3 downto 0));
 end transcodeur_7_seg;
@@ -44,8 +44,16 @@ architecture Behavioral of transcodeur_7_seg is
 signal seg : STD_LOGIC_VECTOR (6 downto 0);
 signal commun : STD_LOGIC_VECTOR (3 downto 0);
 signal nombre : STD_LOGIC_VECTOR (3 downto 0);
-signal comp_hz1 : UNSIGNED (26 downto 0);
-signal hz1 : STD_LOGIC;
+signal comp_hz : UNSIGNED (26 downto 0);
+signal hz3600 : STD_LOGIC;
+signal hz1_en : STD_LOGIC;
+signal hz2_en : STD_LOGIC;
+signal hz4_en : STD_LOGIC;
+signal hz10_en : STD_LOGIC;
+signal hz60_en : STD_LOGIC;
+signal hz200_en : STD_LOGIC;
+signal hz400_en : STD_LOGIC;
+signal hz600_en : STD_LOGIC;
 
 begin
 
@@ -80,15 +88,11 @@ begin
     process (clk)
     begin
         if (clk'event and clk = '1') then
-            if (comp_hz1 > 100000000) then
-                comp_hz1 <= (others => 'U');
-                if (hz1 = '1') then
-                    hz1 <= '0';
-                else
-                    hz1 <= '1';
-                end if;
+            if (comp_hz >= 27777) then
+                comp_hz <= (others => '0');
+                hz3600 <= not(hz3600);
             else
-                comp_hz1 <= comp_hz1 + 1;
+                comp_hz <= comp_hz + 1;
             end if;
         end if;
     end process;
@@ -123,6 +127,6 @@ begin
     
 n_seg <= not(seg);
 n_commun <= not(commun);
-hz1_en <= hz1;
+clkhz <= hz3600;
 
 end Behavioral;

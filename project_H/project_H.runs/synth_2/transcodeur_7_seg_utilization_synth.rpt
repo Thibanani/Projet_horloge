@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Thu Dec 03 16:07:17 2020
+| Date         : Thu Dec 03 17:44:14 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_utilization -file transcodeur_7_seg_utilization_synth.rpt -pb transcodeur_7_seg_utilization_synth.pb
 | Design       : transcodeur_7_seg
@@ -133,10 +133,10 @@ Table of Contents
 | OBUF     |   12 |                  IO |
 | LUT2     |    7 |                 LUT |
 | CARRY4   |    7 |          CarryLogic |
-| LUT6     |    5 |                 LUT |
+| LUT6     |    4 |                 LUT |
 | IBUF     |    3 |                  IO |
-| LUT5     |    1 |                 LUT |
-| LUT3     |    1 |                 LUT |
+| LUT5     |    2 |                 LUT |
+| LUT4     |    1 |                 LUT |
 | BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 
