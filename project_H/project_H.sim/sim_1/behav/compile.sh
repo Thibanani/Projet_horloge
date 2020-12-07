@@ -32,4 +32,4 @@ ExecStep()
    fi
 }
 
-ExecStep xelab -m64 --debug typical --relax -L xil_defaultlib -L secureip --snapshot transcodeur_7_seg_behav --prj C:/Users/Pierre-Olivier/Documents/GitHub/Projet_horloge/project_H/project_H.sim/sim_1/behav/transcodeur_7_seg.prj   xil_defaultlib.transcodeur_7_seg
+ExecStep xelab -m64 --debug typical --relax -L xil_defaultlib -L secureip --snapshot sim_2_behav --prj C:/Users/Pierre-Olivier/Documents/GitHub/Projet_horloge/project_H/project_H.sim/sim_1/behav/sim_2.prj   xil_defaultlib.sim_2

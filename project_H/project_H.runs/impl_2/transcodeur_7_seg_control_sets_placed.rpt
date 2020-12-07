@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Thu Dec 03 17:44:28 2020
+| Date         : Mon Dec 07 18:43:00 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file transcodeur_7_seg_control_sets_placed.rpt
 | Design       : transcodeur_7_seg
@@ -22,8 +22,8 @@ Table of Contents
 +-------------------------------------------------------------------+-------+
 |                               Status                              | Count |
 +-------------------------------------------------------------------+-------+
-| Number of unique control sets                                     |     2 |
-| Minimum Number of register sites lost to control set restrictions |    12 |
+| Number of unique control sets                                     |     8 |
+| Minimum Number of register sites lost to control set restrictions |    33 |
 +-------------------------------------------------------------------+-------+
 
 
@@ -33,23 +33,29 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               1 |            1 |
+| No           | No                    | No                     |               8 |            7 |
 | No           | No                    | Yes                    |               0 |            0 |
-| No           | Yes                   | No                     |              27 |            7 |
+| No           | Yes                   | No                     |              39 |           10 |
 | Yes          | No                    | No                     |               0 |            0 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |               0 |            0 |
+| Yes          | Yes                   | No                     |              16 |            4 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
 3. Detailed Control Set Information
 -----------------------------------
 
-+----------------+---------------+------------------+------------------+----------------+
-|  Clock Signal  | Enable Signal | Set/Reset Signal | Slice Load Count | Bel Load Count |
-+----------------+---------------+------------------+------------------+----------------+
-|  clk_IBUF_BUFG |               |                  |                1 |              1 |
-|  clk_IBUF_BUFG |               | clear            |                7 |             27 |
-+----------------+---------------+------------------+------------------+----------------+
++----------------+---------------+--------------------+------------------+----------------+
+|  Clock Signal  | Enable Signal |  Set/Reset Signal  | Slice Load Count | Bel Load Count |
++----------------+---------------+--------------------+------------------+----------------+
+|  clk_IBUF_BUFG |               |                    |                1 |              1 |
+|  hz3600_BUFG   | enable        | n_0_us[3]_i_1      |                1 |              4 |
+|  hz3600_BUFG   | ds0           | n_0_um[3]_i_1      |                1 |              4 |
+|  hz3600_BUFG   | n_0_us[3]_i_1 | ds0                |                1 |              4 |
+|  hz3600_BUFG   | n_0_um[3]_i_1 | dm0                |                1 |              4 |
+|  hz3600_BUFG   |               |                    |                6 |              7 |
+|  hz3600_BUFG   |               | clear              |                3 |             12 |
+|  clk_IBUF_BUFG |               | n_0_comp_hz[0]_i_1 |                7 |             27 |
++----------------+---------------+--------------------+------------------+----------------+
 
 
