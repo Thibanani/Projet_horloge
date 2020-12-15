@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Mon Dec 07 18:42:47 2020
+| Date         : Tue Dec 15 18:44:59 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_utilization -file transcodeur_7_seg_utilization_synth.rpt -pb transcodeur_7_seg_utilization_synth.pb
 | Design       : transcodeur_7_seg
@@ -29,13 +29,13 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |  225 |     0 |     20800 |  1.08 |
-|   LUT as Logic          |  225 |     0 |     20800 |  1.08 |
+| Slice LUTs*             |  307 |     0 |     20800 |  1.47 |
+|   LUT as Logic          |  307 |     0 |     20800 |  1.47 |
 |   LUT as Memory         |    0 |     0 |      9600 |  0.00 |
-| Slice Registers         |   63 |     0 |     41600 |  0.15 |
-|   Register as Flip Flop |   63 |     0 |     41600 |  0.15 |
+| Slice Registers         |   74 |     0 |     41600 |  0.17 |
+|   Register as Flip Flop |   74 |     0 |     41600 |  0.17 |
 |   Register as Latch     |    0 |     0 |     41600 |  0.00 |
-| F7 Muxes                |    0 |     0 |     16300 |  0.00 |
+| F7 Muxes                |    1 |     0 |     16300 | <0.01 |
 | F8 Muxes                |    0 |     0 |      8150 |  0.00 |
 +-------------------------+------+-------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
@@ -70,7 +70,7 @@ Table of Contents
 +-----------------------------+------+-------+-----------+-------+
 |          Site Type          | Used | Fixed | Available | Util% |
 +-----------------------------+------+-------+-----------+-------+
-| Bonded IOB                  |   15 |     0 |       106 | 14.15 |
+| Bonded IOB                  |   20 |     0 |       106 | 18.86 |
 | Bonded IPADs                |    0 |     0 |        10 |  0.00 |
 | Bonded OPADs                |    0 |     0 |         4 |  0.00 |
 | PHY_CONTROL                 |    0 |     0 |         5 |  0.00 |
@@ -128,17 +128,18 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| LUT1     |   82 |                 LUT |
-| FDRE     |   63 |        Flop & Latch |
-| LUT2     |   58 |                 LUT |
-| CARRY4   |   47 |          CarryLogic |
-| LUT3     |   41 |                 LUT |
-| LUT6     |   32 |                 LUT |
-| LUT4     |   29 |                 LUT |
-| LUT5     |   19 |                 LUT |
+| LUT1     |   95 |                 LUT |
+| LUT2     |   82 |                 LUT |
+| FDRE     |   74 |        Flop & Latch |
+| CARRY4   |   58 |          CarryLogic |
+| LUT6     |   57 |                 LUT |
+| LUT3     |   44 |                 LUT |
+| LUT4     |   38 |                 LUT |
+| LUT5     |   35 |                 LUT |
 | OBUF     |   12 |                  IO |
-| IBUF     |    3 |                  IO |
+| IBUF     |    8 |                  IO |
 | BUFG     |    2 |               Clock |
+| MUXF7    |    1 |               MuxFx |
 +----------+------+---------------------+
 
 

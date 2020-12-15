@@ -33,6 +33,11 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity transcodeur_7_seg is
     Port ( sw_faster : in STD_LOGIC_VECTOR (1 downto 0);
+           sw_aff : in STD_LOGIC;
+           bp_droit : in STD_LOGIC;
+           bp_gauche : in STD_LOGIC;
+           bp_bas : in STD_LOGIC;
+           bp_haut : in STD_LOGIC;
            clk : in STD_LOGIC; 
            clkhz : out STD_LOGIC;
            n_seg : out STD_LOGIC_VECTOR (6 downto 0);
@@ -69,41 +74,109 @@ begin
 
     Horloge : process (hz3600)
     begin
-        case (sw_faster)is
-            when "00" =>
-                enable <= hz1_en;
-            when "01" =>
-                enable <= hz10_en;
-            when "10" =>
-                enable <= hz200_en;
-            when "11" =>
-                enable <= '1';
-        end case;
-        if (hz3600'event and hz3600 = '1' and enable = '1') then
-            if (us >= 9) then
-                us <= (others => '0');
-                ds <= ds + 1;
-            else 
-                us <= us + 1;
-            end if;
-            if (ds >= 5 and us >= 9) then
-                ds <= (others => '0');
-                um <= um + 1;
-            end if;
-            if (um >= 9) then
-                um <= (others => '0');
-                dm <= dm + 1;
-            end if;
-            if (dm >= 5 and um >= 9) then
-                dm <= (others => '0');
-                uh <= uh + 1;
-            end if;
-            if (uh >= 9) then
-                uh <= (others => '0');
-                dh <= dh + 1;
-            end if;
-            if (dh >= 2 and uh >= 9) then
-                dh <= (others => '0');
+        if (hz3600'event and hz3600 = '1') then
+            if (bp_droit = '1' or bp_haut = '1') then   --incrémentation
+                if (bp_droit = '1') then
+                    enable <= hz4_en;
+                elsif (bp_haut = '1') then
+                    enable <= hz60_en;
+                end if;
+                if (enable = '1') then
+                        us <= (others => '0');
+                        ds <= (others => '0');
+                        if (um >= 9) then
+                            um <= (others => '0');
+                            if (dm >= 5 and um >= 9) then
+                                dm <= (others => '0');
+                                if (uh >= 9) then
+                                    uh <= (others => '0');     
+                                    dh <= dh + 1;
+                                elsif (dh >= 2 and uh >= 3) then
+                                    dh <= (others => '0');
+                                    uh <= (others => '0');
+                                else
+                                    uh <= uh + 1;
+                                end if;
+                            else
+                                dm <= dm + 1;
+                            end if;
+                        else
+                            um <= um + 1;
+                        end if;
+                    end if;
+            elsif (bp_gauche = '1' or bp_bas = '1') then    --décrémentation
+                if (bp_gauche = '1') then
+                    enable <= hz4_en;
+                elsif (bp_bas = '1') then
+                    enable <= hz60_en;
+                end if;
+                if (enable = '1') then
+                    us <= (others => '0');
+                    ds <= (others => '0');
+                    if (um <= 0) then
+                        um <= "1001";
+                        if (dm <= 0 and um <= 0) then
+                            dm <= "0101";
+                            if (uh <= 0) then
+                                uh <= "1001";
+                                if (dh <= 0) then    
+                                    dh <= "0010";
+                                    uh <= "0011";
+                                else
+                                    dh <= dh - 1;
+                                end if;
+                            else
+                                uh <= uh - 1;
+                            end if;
+                        else
+                            dm <= dm - 1;
+                        end if;
+                    else
+                        um <= um - 1;
+                    end if;
+                end if;
+            else
+                case (sw_faster)is                  -- normal
+                    when "00" =>
+                        enable <= hz1_en;
+                    when "01" =>
+                        enable <= hz10_en;
+                    when "10" =>
+                        enable <= hz200_en;
+                    when "11" =>
+                        enable <= '1';
+                end case;
+                if (enable = '1')then
+                    if (us >= 9) then
+                        us <= (others => '0');
+                        if (ds >= 5 and us >= 9) then
+                            ds <= (others => '0');
+                            if (um >= 9) then
+                                um <= (others => '0');
+                                if (dm >= 5 and um >= 9) then
+                                    dm <= (others => '0');
+                                    if (uh >= 9) then
+                                        uh <= (others => '0');     
+                                        dh <= dh + 1;
+                                    elsif (dh >= 2 and uh >= 3) then
+                                        dh <= (others => '0');
+                                        uh <= (others => '0');
+                                    else
+                                        uh <= uh + 1;
+                                    end if;
+                                else
+                                    dm <= dm + 1;
+                                end if;
+                            else
+                                um <= um + 1;
+                            end if;
+                        else
+                            ds <= ds + 1;
+                        end if;
+                    else 
+                        us <= us + 1;
+                    end if;
+                end if;
             end if;
         end if;
     end process Horloge;
@@ -133,18 +206,36 @@ begin
          end case;
     end process choix_allumage;
 
-    affichage :process (digitactif) -- Multiplexage
+    affichage :process (digitactif,sw_aff) -- Multiplexage
     begin
-        case (digitactif) is    
-            when "00" =>
-                nombre <= dm;
-            when "01" =>
-                nombre <= um;
-            when "10" =>
-                nombre <= ds;
-            when "11" =>
-                nombre <= us;
-        end case;
+        if (sw_aff = '0') then
+            case (digitactif) is    
+                when "00" =>
+                    nombre <= dm;
+                when "01" =>
+                    nombre <= um;
+                when "10" =>
+                    nombre <= ds;
+                when "11" =>
+                    nombre <= us;
+            end case;
+        end if;
+        if (sw_aff = '1') then
+            case (digitactif) is    
+                when "00" =>
+                    if (dh = 0)then
+                        nombre <= "1111";
+                    else
+                        nombre <= dh;
+                    end if;
+                when "01" =>
+                    nombre <= uh;
+                when "10" =>
+                    nombre <= dm;
+                when "11" =>
+                    nombre <= um;
+            end case; 
+        end if;
     end process affichage;
     
     clock : process (clk)   -- création de la clock en 3600hz à partir de 100MHz
@@ -233,13 +324,15 @@ begin
             when "0101" =>
                 seg <= "1101101";   -- affichage de 5
             when "0110" =>
-                seg <= "1111100";   -- affichage de 6
+                seg <= "1111101";   -- affichage de 6
             when "0111" =>
                 seg <= "0000111";   -- affichage de 7
             when "1000" =>
                 seg <= "1111111";   -- affichage de 8
             when "1001" =>
                 seg <= "1101111";   -- affichage de 9
+            when "1111" =>
+                seg <= "0000000";   -- affichage nul
             when others =>
                 seg <= "1111001";    -- affichage de E lorsque le chiffre demandé est supérieur a 9     
         end case; 

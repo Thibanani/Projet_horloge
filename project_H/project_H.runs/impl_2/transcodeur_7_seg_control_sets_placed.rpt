@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Mon Dec 07 18:43:00 2020
+| Date         : Tue Dec 15 18:45:13 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file transcodeur_7_seg_control_sets_placed.rpt
 | Design       : transcodeur_7_seg
@@ -22,8 +22,8 @@ Table of Contents
 +-------------------------------------------------------------------+-------+
 |                               Status                              | Count |
 +-------------------------------------------------------------------+-------+
-| Number of unique control sets                                     |     8 |
-| Minimum Number of register sites lost to control set restrictions |    33 |
+| Number of unique control sets                                     |    10 |
+| Minimum Number of register sites lost to control set restrictions |    46 |
 +-------------------------------------------------------------------+-------+
 
 
@@ -33,12 +33,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |               8 |            7 |
+| No           | No                    | No                     |              11 |           11 |
 | No           | No                    | Yes                    |               0 |            0 |
 | No           | Yes                   | No                     |              39 |           10 |
-| Yes          | No                    | No                     |               0 |            0 |
+| Yes          | No                    | No                     |              16 |            8 |
 | Yes          | No                    | Yes                    |               0 |            0 |
-| Yes          | Yes                   | No                     |              16 |            4 |
+| Yes          | Yes                   | No                     |               8 |            4 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -49,11 +49,13 @@ Table of Contents
 |  Clock Signal  | Enable Signal |  Set/Reset Signal  | Slice Load Count | Bel Load Count |
 +----------------+---------------+--------------------+------------------+----------------+
 |  clk_IBUF_BUFG |               |                    |                1 |              1 |
-|  hz3600_BUFG   | enable        | n_0_us[3]_i_1      |                1 |              4 |
-|  hz3600_BUFG   | ds0           | n_0_um[3]_i_1      |                1 |              4 |
-|  hz3600_BUFG   | n_0_us[3]_i_1 | ds0                |                1 |              4 |
-|  hz3600_BUFG   | n_0_um[3]_i_1 | dm0                |                1 |              4 |
-|  hz3600_BUFG   |               |                    |                6 |              7 |
+|  hz3600_BUFG   | enable        | n_0_us[3]_i_1      |                2 |              4 |
+|  hz3600_BUFG   | n_0_dh[3]_i_1 |                    |                2 |              4 |
+|  hz3600_BUFG   | n_0_dm[3]_i_1 |                    |                3 |              4 |
+|  hz3600_BUFG   | n_0_um[3]_i_1 |                    |                1 |              4 |
+|  hz3600_BUFG   | n_0_us[3]_i_1 | n_0_ds[3]_i_1      |                2 |              4 |
+|  hz3600_BUFG   | n_0_uh[3]_i_1 |                    |                2 |              4 |
+|  hz3600_BUFG   |               |                    |               10 |             10 |
 |  hz3600_BUFG   |               | clear              |                3 |             12 |
 |  clk_IBUF_BUFG |               | n_0_comp_hz[0]_i_1 |                7 |             27 |
 +----------------+---------------+--------------------+------------------+----------------+

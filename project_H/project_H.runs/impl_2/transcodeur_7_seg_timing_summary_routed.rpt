@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Mon Dec 07 18:43:15 2020
+| Date         : Tue Dec 15 18:45:28 2020
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_timing_summary -warn_on_violation -file transcodeur_7_seg_timing_summary_routed.rpt -pb transcodeur_7_seg_timing_summary_routed.pb
 | Design       : transcodeur_7_seg
@@ -53,7 +53,7 @@ Table of Contents
 --------------------
  There are 28 register/latch pins with no clock driven by root clock pin: clk (HIGH)
 
- There are 35 register/latch pins with no clock driven by root clock pin: hz3600_reg/C (HIGH)
+ There are 46 register/latch pins with no clock driven by root clock pin: hz3600_reg/C (HIGH)
 
 
 2. checking constant clock
@@ -68,14 +68,14 @@ Table of Contents
 
 4. checking unconstrained_internal_endpoints
 --------------------------------------------
- There are 134 pins that are not constrained for maximum delay. (HIGH)
+ There are 145 pins that are not constrained for maximum delay. (HIGH)
 
  There are 0 pins that are not constrained for maximum delay due to constant clock.
 
 
 5. checking no_input_delay
 --------------------------
- There are 3 input ports with no input delay specified. (HIGH)
+ There are 7 input ports with no input delay specified. (HIGH)
 
  There are 0 input ports with no input delay but user has a false path constraint.
 
