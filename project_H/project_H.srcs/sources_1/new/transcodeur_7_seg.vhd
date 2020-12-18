@@ -39,9 +39,11 @@ entity transcodeur_7_seg is
            bp_bas : in STD_LOGIC;
            bp_haut : in STD_LOGIC;
            clk : in STD_LOGIC; 
-           clkhz : out STD_LOGIC;
+           secondes : out STD_LOGIC_VECTOR (9 downto 0);
+           n_pointdecimal : out STD_LOGIC;
            n_seg : out STD_LOGIC_VECTOR (6 downto 0);
-           n_commun : out STD_LOGIC_VECTOR (3 downto 0));
+           n_commun : out STD_LOGIC_VECTOR (3 downto 0);
+           n_bargraphcommun : out STD_LOGIC_VECTOR (5 downto 0));
 end transcodeur_7_seg;
 
 architecture Behavioral of transcodeur_7_seg is  
@@ -52,8 +54,11 @@ signal nombre : UNSIGNED (3 downto 0);
 signal comp_hz : UNSIGNED (26 downto 0);
 signal comp_en : UNSIGNED (11 downto 0);
 signal digitactif : UNSIGNED (1 downto 0);
+signal bargraphactif : UNSIGNED (2 downto 0);
+signal bargraphcommun : STD_LOGIC_VECTOR (5 downto 0);
 signal hz3600 : STD_LOGIC;
-signal hz1 : STD_LOGIC;
+signal pointdecimal : STD_LOGIC;
+signal inter : STD_LOGIC;
 signal hz1_en : STD_LOGIC;
 signal hz2_en : STD_LOGIC;
 signal hz4_en : STD_LOGIC;
@@ -191,6 +196,229 @@ begin
             end if;
         end if;
     end process Compteur_affichage;
+    
+    Compteur_Bargraph : process (hz3600)
+    begin
+        if (hz3600'event and hz3600 = '1' and hz600_en = '1') then
+            if (bargraphactif >= 5) then
+                bargraphactif <= (others => '0');
+            else
+                bargraphactif <= bargraphactif + 1;
+            end if;
+        end if;
+    end process Compteur_Bargraph;
+    
+    Allumage_Bargraph : process (bargraphactif)
+    begin
+        case (bargraphactif) is
+            when "000" =>
+                bargraphcommun <= "100000";
+            when "001" =>
+                bargraphcommun <= "010000";
+            when "010" =>
+                bargraphcommun <= "001000";
+            when "011" =>
+                bargraphcommun <= "000100";
+            when "100" =>
+                bargraphcommun <= "000010";
+            when "101" =>
+                bargraphcommun <= "000001";
+            when others =>
+                bargraphcommun <= "000000";
+        end case;
+    end process Allumage_Bargraph;
+    
+    Gestion_secondes : process (bargraphactif)
+    begin
+        case (bargraphactif) is
+        when "000" =>
+            if (ds = 0) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "0000000001";
+                    when "0001" =>
+                        secondes <= "0000000011";
+                    when "0010" =>
+                        secondes <= "0000000111";
+                    when "0011" =>
+                        secondes <= "0000001111";
+                    when "0100" =>
+                        secondes <= "0000011111";
+                    when "0101" =>
+                        secondes <= "0000111111";
+                    when "0110" =>
+                        secondes <= "0001111111";
+                    when "0111" =>
+                        secondes <= "0011111111";
+                    when "1000" =>
+                        secondes <= "0111111111";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            else
+                secondes <= "1111111111";
+            end if;
+        when "001" =>
+            if (ds = 1) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "1000000000";
+                    when "0001" =>
+                        secondes <= "1100000000";
+                    when "0010" =>
+                        secondes <= "1110000000";
+                    when "0011" =>
+                        secondes <= "1111000000";
+                    when "0100" =>
+                        secondes <= "1111100000";
+                    when "0101" =>
+                        secondes <= "1111110000";
+                    when "0110" =>
+                        secondes <= "1111111000";
+                    when "0111" =>
+                        secondes <= "1111111100";
+                    when "1000" =>
+                        secondes <= "1111111110";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            elsif (ds > 1) then
+                secondes <= "1111111111";
+            else
+                secondes <= "0000000000";
+            end if;
+        when "010" =>
+            if (ds = 2) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "0000000001";
+                    when "0001" =>
+                        secondes <= "0000000011";
+                    when "0010" =>
+                        secondes <= "0000000111";
+                    when "0011" =>
+                        secondes <= "0000001111";
+                    when "0100" =>
+                        secondes <= "0000011111";
+                    when "0101" =>
+                        secondes <= "0000111111";
+                    when "0110" =>
+                        secondes <= "0001111111";
+                    when "0111" =>
+                        secondes <= "0011111111";
+                    when "1000" =>
+                        secondes <= "0111111111";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            elsif (ds > 2) then
+                secondes <= "1111111111";
+            else
+                secondes <= "0000000000";
+            end if;
+        when "011" =>
+            if (ds = 3) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "0000000001";
+                    when "0001" =>
+                        secondes <= "0000000011";
+                    when "0010" =>
+                        secondes <= "0000000111";
+                    when "0011" =>
+                        secondes <= "0000001111";
+                    when "0100" =>
+                        secondes <= "0000011111";
+                    when "0101" =>
+                        secondes <= "0000111111";
+                    when "0110" =>
+                        secondes <= "0001111111";
+                    when "0111" =>
+                        secondes <= "0011111111";
+                    when "1000" =>
+                        secondes <= "0111111111";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            elsif (ds > 3) then
+                secondes <= "1111111111";
+            else
+                secondes <= "0000000000";
+            end if;
+        when "100" =>
+            if (ds = 4) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "1000000000";
+                    when "0001" =>
+                        secondes <= "1100000000";
+                    when "0010" =>
+                        secondes <= "1110000000";
+                    when "0011" =>
+                        secondes <= "1111000000";
+                    when "0100" =>
+                        secondes <= "1111100000";
+                    when "0101" =>
+                        secondes <= "1111110000";
+                    when "0110" =>
+                        secondes <= "1111111000";
+                    when "0111" =>
+                        secondes <= "1111111100";
+                    when "1000" =>
+                        secondes <= "1111111110";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            elsif (ds > 4) then
+                secondes <= "1111111111";
+            else
+                secondes <= "0000000000";
+            end if;
+        when "101" =>
+            if (ds = 5) then
+                case (us) is
+                    when "0000" =>
+                        secondes <= "0000000001";
+                    when "0001" =>
+                        secondes <= "0000000011";
+                    when "0010" =>
+                        secondes <= "0000000111";
+                    when "0011" =>
+                        secondes <= "0000001111";
+                    when "0100" =>
+                        secondes <= "0000011111";
+                    when "0101" =>
+                        secondes <= "0000111111";
+                    when "0110" =>
+                        secondes <= "0001111111";
+                    when "0111" =>
+                        secondes <= "0011111111";
+                    when "1000" =>
+                        secondes <= "0111111111";
+                    when "1001" =>
+                        secondes <= "1111111111";
+                    when others =>
+                        secondes <= "0000000000";
+                end case;
+            elsif (ds > 5) then
+                secondes <= "1111111111";
+            else
+                secondes <= "0000000000";
+            end if;
+        when others =>
+            secondes <= "0000000000";
+        end case;
+    end process Gestion_secondes;
 
     choix_allumage : process (digitactif) -- Allumage digits
     begin
@@ -301,12 +529,21 @@ begin
         end if;
     end process differente_horloge;
     
-    test : process (hz3600)
+    Point_décimal : process (hz3600)
     begin
-            if (hz3600'event and hz3600 = '1' and hz1_en = '1') then
-                hz1 <= not(hz1);
-            end if;
-    end process test;
+        if (hz3600'event and hz3600 = '1' and hz2_en = '1') then
+            inter <= not(inter);
+        end if;
+    end process Point_décimal;
+    
+    Affichage_Point_décimal : process (digitactif)
+    begin
+        if (digitactif = "01") then
+            pointdecimal <= inter;
+        else
+            pointdecimal <= '0';
+        end if;
+    end process Affichage_Point_décimal;
 
     affichage_nombre : process (nombre) -- 7segments
     begin
@@ -340,6 +577,7 @@ begin
     
 n_seg <= not(seg);
 n_commun <= not(commun);
-clkhz <= hz1;
+n_pointdecimal <= not(pointdecimal);
+n_bargraphcommun <= not(bargraphcommun);
 
 end Behavioral;

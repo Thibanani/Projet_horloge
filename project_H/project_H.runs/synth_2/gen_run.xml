@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1608054282">
-  <File Type="RUN-CONSTRS" Name="$PDATADIR/runs/synth_2/constrs_in.xml"/>
+<GenRun Id="synth_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1608291248">
   <File Type="RDS-UTIL-PB" Name="transcodeur_7_seg_utilization_synth.pb"/>
-  <File Type="RUN-SRCS" Name="$PDATADIR/runs/synth_2/sources.xml"/>
+  <File Type="RUN-CONSTRS" Name="$PDATADIR/runs/synth_2/constrs_in.xml"/>
   <File Type="RDS-UTIL" Name="transcodeur_7_seg_utilization_synth.rpt"/>
+  <File Type="RUN-SRCS" Name="$PDATADIR/runs/synth_2/sources.xml"/>
   <File Type="RUN-STRAT" Name="$PDATADIR/runs/synth_2/synth_2.psg"/>
-  <File Type="PA-TCL" Name="transcodeur_7_seg.tcl"/>
   <File Type="VDS-TIMINGSUMMARY" Name="transcodeur_7_seg_timing_summary_synth.rpt"/>
+  <File Type="PA-TCL" Name="transcodeur_7_seg.tcl"/>
   <File Type="RDS-RDS" Name="transcodeur_7_seg.vds"/>
   <File Type="RDS-DCP" Name="transcodeur_7_seg.dcp"/>
   <File Type="VDS-TIMING-PB" Name="transcodeur_7_seg_timing_summary_synth.pb"/>
@@ -14,6 +14,13 @@
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/transcodeur_7_seg.vhd">
+      <FileInfo>
+        <Attr Name="Library" Val="xil_defaultlib"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/new/FILTRE.vhd">
       <FileInfo>
         <Attr Name="Library" Val="xil_defaultlib"/>
         <Attr Name="UsedIn" Val="synthesis"/>
