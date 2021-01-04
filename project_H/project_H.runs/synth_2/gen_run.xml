@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1608291248">
+<GenRun Id="synth_2" LaunchPart="xc7a35tcpg236-1" LaunchTime="1609775676">
   <File Type="RDS-UTIL-PB" Name="transcodeur_7_seg_utilization_synth.pb"/>
   <File Type="RUN-CONSTRS" Name="$PDATADIR/runs/synth_2/constrs_in.xml"/>
   <File Type="RDS-UTIL" Name="transcodeur_7_seg_utilization_synth.rpt"/>

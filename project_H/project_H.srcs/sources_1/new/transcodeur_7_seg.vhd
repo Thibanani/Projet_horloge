@@ -34,6 +34,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity transcodeur_7_seg is
     Port ( sw_faster : in STD_LOGIC_VECTOR (1 downto 0);
            sw_aff : in STD_LOGIC;
+           sw_cumul : in STD_LOGIC;
+           sw_animation : in STD_LOGIC;
            bp_droit : in STD_LOGIC;
            bp_gauche : in STD_LOGIC;
            bp_bas : in STD_LOGIC;
@@ -74,16 +76,32 @@ signal dm : UNSIGNED (3 downto 0);
 signal um : UNSIGNED (3 downto 0);
 signal ds : UNSIGNED (3 downto 0);
 signal us : UNSIGNED (3 downto 0);
+signal bp_droitfiltre : STD_LOGIC;
+signal bp_gauchefiltre : STD_LOGIC;
+signal bp_basfiltre : STD_LOGIC;
+signal bp_hautfiltre : STD_LOGIC;
+signal danime : STD_LOGIC;
+signal uanime : STD_LOGIC;
+signal tempo : UNSIGNED (11 downto 0);
+signal compteur : UNSIGNED (11 downto 0);
+component Filtre
+    port (hz10_en,clk,bp : in STD_LOGIC; bpfiltre : out STD_LOGIC);
+end component;    
 
 begin
+
+    E0 : FILTRE port map(hz10_en, clk, bp_droit, bp_droitfiltre);
+    E1 : FILTRE port map(hz10_en, clk, bp_gauche, bp_gauchefiltre);
+    E2 : FILTRE port map(hz10_en, clk, bp_bas, bp_basfiltre);
+    E3 : FILTRE port map(hz10_en, clk, bp_haut, bp_hautfiltre);
 
     Horloge : process (hz3600)
     begin
         if (hz3600'event and hz3600 = '1') then
-            if (bp_droit = '1' or bp_haut = '1') then   --incrémentation
-                if (bp_droit = '1') then
+            if (bp_droitfiltre = '1' or bp_hautfiltre = '1') then   --incrémentation
+                if (bp_droitfiltre = '1') then
                     enable <= hz4_en;
-                elsif (bp_haut = '1') then
+                elsif (bp_hautfiltre = '1') then
                     enable <= hz60_en;
                 end if;
                 if (enable = '1') then
@@ -109,10 +127,10 @@ begin
                             um <= um + 1;
                         end if;
                     end if;
-            elsif (bp_gauche = '1' or bp_bas = '1') then    --décrémentation
-                if (bp_gauche = '1') then
+            elsif (bp_gauchefiltre = '1' or bp_basfiltre = '1') then    --décrémentation
+                if (bp_gauchefiltre = '1') then
                     enable <= hz4_en;
-                elsif (bp_bas = '1') then
+                elsif (bp_basfiltre = '1') then
                     enable <= hz60_en;
                 end if;
                 if (enable = '1') then
@@ -228,196 +246,535 @@ begin
         end case;
     end process Allumage_Bargraph;
     
-    Gestion_secondes : process (bargraphactif)
+    Gestion_secondes : process (hz3600)
     begin
-        case (bargraphactif) is
-        when "000" =>
+        if (sw_animation = '1') then
+            tempo <= (others => '0');
             if (ds = 0) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "0000000001";
-                    when "0001" =>
-                        secondes <= "0000000011";
-                    when "0010" =>
-                        secondes <= "0000000111";
-                    when "0011" =>
-                        secondes <= "0000001111";
-                    when "0100" =>
-                        secondes <= "0000011111";
-                    when "0101" =>
-                        secondes <= "0000111111";
-                    when "0110" =>
-                        secondes <= "0001111111";
-                    when "0111" =>
-                        secondes <= "0011111111";
-                    when "1000" =>
-                        secondes <= "0111111111";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            else
-                secondes <= "1111111111";
+                if (us = 0) then
+                    tempo <= tempo + 60;
+                elsif (us = 1) then
+                    tempo <= tempo + 61;
+                elsif (us = 2) then
+                    tempo <= tempo + 62;
+                elsif (us = 3) then
+                    tempo <= tempo + 63;
+                elsif (us = 4) then
+                    tempo <= tempo + 64;
+                elsif (us = 5) then
+                    tempo <= tempo + 65;
+                elsif (us = 6) then
+                    tempo <= tempo + 67;
+                elsif (us = 7) then
+                    tempo <= tempo + 68;
+                elsif (us = 8) then
+                    tempo <= tempo + 69;
+                elsif (us = 9) then
+                    tempo <= tempo + 70;
+                end if;
             end if;
-        when "001" =>
             if (ds = 1) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "1000000000";
-                    when "0001" =>
-                        secondes <= "1100000000";
-                    when "0010" =>
-                        secondes <= "1110000000";
-                    when "0011" =>
-                        secondes <= "1111000000";
-                    when "0100" =>
-                        secondes <= "1111100000";
-                    when "0101" =>
-                        secondes <= "1111110000";
-                    when "0110" =>
-                        secondes <= "1111111000";
-                    when "0111" =>
-                        secondes <= "1111111100";
-                    when "1000" =>
-                        secondes <= "1111111110";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            elsif (ds > 1) then
-                secondes <= "1111111111";
-            else
-                secondes <= "0000000000";
+                if (us = 0) then
+                    tempo <= tempo + 72;
+                elsif (us = 1) then
+                    tempo <= tempo + 73;
+                elsif (us = 2) then
+                    tempo <= tempo + 75;
+                elsif (us = 3) then
+                    tempo <= tempo + 77;
+                elsif (us = 4) then
+                    tempo <= tempo + 78;
+                elsif (us = 5) then
+                    tempo <= tempo + 80;
+                elsif (us = 6) then
+                    tempo <= tempo + 82;
+                elsif (us = 7) then
+                    tempo <= tempo + 84;
+                elsif (us = 8) then
+                    tempo <= tempo + 86;
+                elsif (us = 9) then
+                    tempo <= tempo + 88;
+                end if;
             end if;
-        when "010" =>
             if (ds = 2) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "0000000001";
-                    when "0001" =>
-                        secondes <= "0000000011";
-                    when "0010" =>
-                        secondes <= "0000000111";
-                    when "0011" =>
-                        secondes <= "0000001111";
-                    when "0100" =>
-                        secondes <= "0000011111";
-                    when "0101" =>
-                        secondes <= "0000111111";
-                    when "0110" =>
-                        secondes <= "0001111111";
-                    when "0111" =>
-                        secondes <= "0011111111";
-                    when "1000" =>
-                        secondes <= "0111111111";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            elsif (ds > 2) then
-                secondes <= "1111111111";
-            else
-                secondes <= "0000000000";
+                if (us = 0) then
+                    tempo <= tempo + 90;
+                elsif (us = 1) then
+                    tempo <= tempo + 92;
+                elsif (us = 2) then
+                    tempo <= tempo + 95;
+                elsif (us = 3) then
+                    tempo <= tempo + 97;
+                elsif (us = 4) then
+                    tempo <= tempo + 100;
+                elsif (us = 5) then
+                    tempo <= tempo + 102;
+                elsif (us = 6) then
+                    tempo <= tempo + 105;
+                elsif (us = 7) then
+                    tempo <= tempo + 109;
+                elsif (us = 8) then
+                    tempo <= tempo + 112;
+                elsif (us = 9) then
+                    tempo <= tempo + 116;
+                end if;
             end if;
-        when "011" =>
             if (ds = 3) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "0000000001";
-                    when "0001" =>
-                        secondes <= "0000000011";
-                    when "0010" =>
-                        secondes <= "0000000111";
-                    when "0011" =>
-                        secondes <= "0000001111";
-                    when "0100" =>
-                        secondes <= "0000011111";
-                    when "0101" =>
-                        secondes <= "0000111111";
-                    when "0110" =>
-                        secondes <= "0001111111";
-                    when "0111" =>
-                        secondes <= "0011111111";
-                    when "1000" =>
-                        secondes <= "0111111111";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            elsif (ds > 3) then
-                secondes <= "1111111111";
-            else
-                secondes <= "0000000000";
+                if (us = 0) then
+                    tempo <= tempo + 120;
+                elsif (us = 1) then
+                    tempo <= tempo + 124;
+                elsif (us = 2) then
+                    tempo <= tempo + 128;
+                elsif (us = 3) then
+                    tempo <= tempo + 133;
+                elsif (us = 4) then
+                    tempo <= tempo + 138;
+                elsif (us = 5) then
+                    tempo <= tempo + 144;
+                elsif (us = 6) then
+                    tempo <= tempo + 150;
+                elsif (us = 7) then
+                    tempo <= tempo + 156;
+                elsif (us = 8) then
+                    tempo <= tempo + 164;
+                elsif (us = 9) then
+                    tempo <= tempo + 171;
+                end if;
             end if;
-        when "100" =>
             if (ds = 4) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "1000000000";
-                    when "0001" =>
-                        secondes <= "1100000000";
-                    when "0010" =>
-                        secondes <= "1110000000";
-                    when "0011" =>
-                        secondes <= "1111000000";
-                    when "0100" =>
-                        secondes <= "1111100000";
-                    when "0101" =>
-                        secondes <= "1111110000";
-                    when "0110" =>
-                        secondes <= "1111111000";
-                    when "0111" =>
-                        secondes <= "1111111100";
-                    when "1000" =>
-                        secondes <= "1111111110";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            elsif (ds > 4) then
-                secondes <= "1111111111";
-            else
-                secondes <= "0000000000";
+                if (us = 0) then
+                    tempo <= tempo + 180;
+                elsif (us = 1) then
+                    tempo <= tempo + 189;
+                elsif (us = 2) then
+                    tempo <= tempo + 200;
+                elsif (us = 3) then
+                    tempo <= tempo + 212;
+                elsif (us = 4) then
+                    tempo <= tempo + 225;
+                elsif (us = 5) then
+                    tempo <= tempo + 240;
+                elsif (us = 6) then
+                    tempo <= tempo + 257;
+                elsif (us = 7) then
+                    tempo <= tempo + 277;
+                elsif (us = 8) then
+                    tempo <= tempo + 300;
+                elsif (us = 9) then
+                    tempo <= tempo + 327;
+                end if;
             end if;
-        when "101" =>
             if (ds = 5) then
-                case (us) is
-                    when "0000" =>
-                        secondes <= "0000000001";
-                    when "0001" =>
-                        secondes <= "0000000011";
-                    when "0010" =>
-                        secondes <= "0000000111";
-                    when "0011" =>
-                        secondes <= "0000001111";
-                    when "0100" =>
-                        secondes <= "0000011111";
-                    when "0101" =>
-                        secondes <= "0000111111";
-                    when "0110" =>
-                        secondes <= "0001111111";
-                    when "0111" =>
-                        secondes <= "0011111111";
-                    when "1000" =>
-                        secondes <= "0111111111";
-                    when "1001" =>
-                        secondes <= "1111111111";
-                    when others =>
-                        secondes <= "0000000000";
-                end case;
-            elsif (ds > 5) then
-                secondes <= "1111111111";
-            else
-                secondes <= "0000000000";
+                if (us = 0) then
+                    tempo <= tempo + 360;
+                elsif (us = 1) then
+                    tempo <= tempo + 400;
+                elsif (us = 2) then
+                    tempo <= tempo + 450;
+                elsif (us = 3) then
+                    tempo <= tempo + 514;
+                elsif (us = 4) then
+                    tempo <= tempo + 600;
+                elsif (us = 5) then
+                    tempo <= tempo + 720;
+                elsif (us = 6) then
+                    tempo <= tempo + 900;
+                elsif (us = 7) then
+                    tempo <= tempo + 1200;
+                elsif (us = 8) then
+                    tempo <= tempo + 1800;
+                elsif (us = 9) then
+                    tempo <= tempo + 3600;
+                end if;
             end if;
-        when others =>
-            secondes <= "0000000000";
-        end case;
+            if (hz3600'event and hz3600 = '1') then
+                if (compteur >= tempo) then
+                    compteur <= (others => '0');
+                    if (danime >= 0) then
+                        uanime <= (others => '9');
+                        if (danime >= 0 and uanime >= 0) then
+                            ds <= (others => '5');
+                        else
+                            ds <= ds - 1;
+                        end if;
+                    else 
+                        us <= us - 1;
+                    end if;
+                else
+                    compteur <= compteur + 1;
+                end if;
+            end if; 
+        end if;
+        if (sw_cumul = '1') then
+            case (bargraphactif) is
+            when "000" =>
+                if (ds = 0) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000011";
+                        when "0010" =>
+                            secondes <= "0000000111";
+                        when "0011" =>
+                            secondes <= "0000001111";
+                        when "0100" =>
+                            secondes <= "0000011111";
+                        when "0101" =>
+                            secondes <= "0000111111";
+                        when "0110" =>
+                            secondes <= "0001111111";
+                        when "0111" =>
+                            secondes <= "0011111111";
+                        when "1000" =>
+                            secondes <= "0111111111";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "1111111111";
+                end if;
+            when "001" =>
+                if (ds = 1) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "1000000000";
+                        when "0001" =>
+                            secondes <= "1100000000";
+                        when "0010" =>
+                            secondes <= "1110000000";
+                        when "0011" =>
+                            secondes <= "1111000000";
+                        when "0100" =>
+                            secondes <= "1111100000";
+                        when "0101" =>
+                            secondes <= "1111110000";
+                        when "0110" =>
+                            secondes <= "1111111000";
+                        when "0111" =>
+                            secondes <= "1111111100";
+                        when "1000" =>
+                            secondes <= "1111111110";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                elsif (ds > 1) then
+                    secondes <= "1111111111";
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "010" =>
+                if (ds = 2) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000011";
+                        when "0010" =>
+                            secondes <= "0000000111";
+                        when "0011" =>
+                            secondes <= "0000001111";
+                        when "0100" =>
+                            secondes <= "0000011111";
+                        when "0101" =>
+                            secondes <= "0000111111";
+                        when "0110" =>
+                            secondes <= "0001111111";
+                        when "0111" =>
+                            secondes <= "0011111111";
+                        when "1000" =>
+                            secondes <= "0111111111";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                elsif (ds > 2) then
+                    secondes <= "1111111111";
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "011" =>
+                if (ds = 3) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000011";
+                        when "0010" =>
+                            secondes <= "0000000111";
+                        when "0011" =>
+                            secondes <= "0000001111";
+                        when "0100" =>
+                            secondes <= "0000011111";
+                        when "0101" =>
+                            secondes <= "0000111111";
+                        when "0110" =>
+                            secondes <= "0001111111";
+                        when "0111" =>
+                            secondes <= "0011111111";
+                        when "1000" =>
+                            secondes <= "0111111111";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                elsif (ds > 3) then
+                    secondes <= "1111111111";
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "100" =>
+                if (ds = 4) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "1000000000";
+                        when "0001" =>
+                            secondes <= "1100000000";
+                        when "0010" =>
+                            secondes <= "1110000000";
+                        when "0011" =>
+                            secondes <= "1111000000";
+                        when "0100" =>
+                            secondes <= "1111100000";
+                        when "0101" =>
+                            secondes <= "1111110000";
+                        when "0110" =>
+                            secondes <= "1111111000";
+                        when "0111" =>
+                            secondes <= "1111111100";
+                        when "1000" =>
+                            secondes <= "1111111110";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                elsif (ds > 4) then
+                    secondes <= "1111111111";
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "101" =>
+                if (ds = 5) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000011";
+                        when "0010" =>
+                            secondes <= "0000000111";
+                        when "0011" =>
+                            secondes <= "0000001111";
+                        when "0100" =>
+                            secondes <= "0000011111";
+                        when "0101" =>
+                            secondes <= "0000111111";
+                        when "0110" =>
+                            secondes <= "0001111111";
+                        when "0111" =>
+                            secondes <= "0011111111";
+                        when "1000" =>
+                            secondes <= "0111111111";
+                        when "1001" =>
+                            secondes <= "1111111111";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                elsif (ds > 5) then
+                    secondes <= "1111111111";
+                else
+                    secondes <= "0000000000";
+                end if;
+            when others =>
+                secondes <= "0000000000";
+            end case;
+        else 
+            case (bargraphactif) is
+            when "000" =>
+                if (ds = 0) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000010";
+                        when "0010" =>
+                            secondes <= "0000000100";
+                        when "0011" =>
+                            secondes <= "0000001000";
+                        when "0100" =>
+                            secondes <= "0000010000";
+                        when "0101" =>
+                            secondes <= "0000100000";
+                        when "0110" =>
+                            secondes <= "0001000000";
+                        when "0111" =>
+                            secondes <= "0010000000";
+                        when "1000" =>
+                            secondes <= "0100000000";
+                        when "1001" =>
+                            secondes <= "1000000000";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "001" =>
+                if (ds = 1) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "1000000000";
+                        when "0001" =>
+                            secondes <= "0100000000";
+                        when "0010" =>
+                            secondes <= "0010000000";
+                        when "0011" =>
+                            secondes <= "0001000000";
+                        when "0100" =>
+                            secondes <= "0000100000";
+                        when "0101" =>
+                            secondes <= "0000010000";
+                        when "0110" =>
+                            secondes <= "0000001000";
+                        when "0111" =>
+                            secondes <= "0000000100";
+                        when "1000" =>
+                            secondes <= "0000000010";
+                        when "1001" =>
+                            secondes <= "0000000001";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "010" =>
+                if (ds = 2) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000010";
+                        when "0010" =>
+                            secondes <= "0000000100";
+                        when "0011" =>
+                            secondes <= "0000001000";
+                        when "0100" =>
+                            secondes <= "0000010000";
+                        when "0101" =>
+                            secondes <= "0000100000";
+                        when "0110" =>
+                            secondes <= "0001000000";
+                        when "0111" =>
+                            secondes <= "0010000000";
+                        when "1000" =>
+                            secondes <= "0100000000";
+                        when "1001" =>
+                            secondes <= "1000000000";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "011" =>
+                if (ds = 3) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000010";
+                        when "0010" =>
+                            secondes <= "0000000100";
+                        when "0011" =>
+                            secondes <= "0000001000";
+                        when "0100" =>
+                            secondes <= "0000010000";
+                        when "0101" =>
+                            secondes <= "0000100000";
+                        when "0110" =>
+                            secondes <= "0001000000";
+                        when "0111" =>
+                            secondes <= "0010000000";
+                        when "1000" =>
+                            secondes <= "0100000000";
+                        when "1001" =>
+                            secondes <= "1000000000";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "100" =>
+                if (ds = 4) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "1000000000";
+                        when "0001" =>
+                            secondes <= "0100000000";
+                        when "0010" =>
+                            secondes <= "0010000000";
+                        when "0011" =>
+                            secondes <= "0001000000";
+                        when "0100" =>
+                            secondes <= "0000100000";
+                        when "0101" =>
+                            secondes <= "0000010000";
+                        when "0110" =>
+                            secondes <= "0000001000";
+                        when "0111" =>
+                            secondes <= "0000000100";
+                        when "1000" =>
+                            secondes <= "0000000010";
+                        when "1001" =>
+                            secondes <= "0000000001";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when "101" =>
+                if (ds = 5) then
+                    case (us) is
+                        when "0000" =>
+                            secondes <= "0000000001";
+                        when "0001" =>
+                            secondes <= "0000000010";
+                        when "0010" =>
+                            secondes <= "0000000100";
+                        when "0011" =>
+                            secondes <= "0000001000";
+                        when "0100" =>
+                            secondes <= "0000010000";
+                        when "0101" =>
+                            secondes <= "0000100000";
+                        when "0110" =>
+                            secondes <= "0001000000";
+                        when "0111" =>
+                            secondes <= "0010000000";
+                        when "1000" =>
+                            secondes <= "0100000000";
+                        when "1001" =>
+                            secondes <= "1000000000";
+                        when others =>
+                            secondes <= "0000000000";
+                    end case;
+                else
+                    secondes <= "0000000000";
+                end if;
+            when others =>
+                secondes <= "0000000000";
+            end case;
+        end if;
     end process Gestion_secondes;
 
     choix_allumage : process (digitactif) -- Allumage digits

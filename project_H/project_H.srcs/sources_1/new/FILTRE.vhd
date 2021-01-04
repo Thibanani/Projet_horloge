@@ -34,12 +34,28 @@ use IEEE.NUMERIC_STD.ALL;
 entity FILTRE is
     Port ( hz10_en : in STD_LOGIC;
            clk : in STD_LOGIC;
-           bp : in STD_LOGIC);
+           bp : in STD_LOGIC;
+           bpfiltre : out STD_LOGIC);
 end FILTRE;
 
 architecture Behavioral of FILTRE is
-
+    
+signal bp_precedent : STD_LOGIC;
+    
 begin
-
-
+    Filtre : process (clk,hz10_en)
+    begin
+        if (clk'event and clk = '1' and hz10_en = '1') then
+            if (bp = '1' and bp_precedent = '1') then
+                bpfiltre <= '1';
+            end if;
+            if (bp = '1') then
+                bp_precedent <= '1';
+            end if;
+            if (bp = '0') then
+                bp_precedent <= '0';
+                bpfiltre <= '0';
+            end if;
+        end if;
+    end process;
 end Behavioral;
