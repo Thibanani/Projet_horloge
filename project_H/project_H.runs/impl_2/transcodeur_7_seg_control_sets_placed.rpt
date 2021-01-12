@@ -1,7 +1,7 @@
 Copyright 1986-2014 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2014.2 (win64) Build 932637 Wed Jun 11 13:33:10 MDT 2014
-| Date         : Fri Jan 08 11:06:57 2021
+| Date         : Mon Jan 11 16:17:49 2021
 | Host         : POC running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file transcodeur_7_seg_control_sets_placed.rpt
 | Design       : transcodeur_7_seg
@@ -50,10 +50,10 @@ Table of Contents
 +----------------+---------------+--------------------+------------------+----------------+
 |  hz3600_BUFG   | enable        | E0/O8              |                2 |              4 |
 |  hz3600_BUFG   | E0/O8         | E0/O7              |                2 |              4 |
-|  hz3600_BUFG   | E0/E[0]       |                    |                1 |              4 |
-|  hz3600_BUFG   | E2/O3[0]      |                    |                3 |              4 |
-|  hz3600_BUFG   | E2/O1[0]      |                    |                2 |              4 |
 |  hz3600_BUFG   | E2/E[0]       |                    |                1 |              4 |
+|  hz3600_BUFG   | E2/O1[0]      |                    |                2 |              4 |
+|  hz3600_BUFG   | E2/O3[0]      |                    |                3 |              4 |
+|  hz3600_BUFG   | E0/E[0]       |                    |                1 |              4 |
 |  clk_IBUF_BUFG |               |                    |                2 |              9 |
 |  hz3600_BUFG   |               | clear              |                3 |             12 |
 |  hz3600_BUFG   |               |                    |               12 |             15 |

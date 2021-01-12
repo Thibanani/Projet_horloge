@@ -45,11 +45,11 @@ signal bp_precedent : STD_LOGIC;
 begin
     Filtre : process (clk,hz10_en)
     begin
-        if (clk'event and clk = '1' and hz10_en = '1') then
-            if (bp = '1' and bp_precedent = '1') then
+        if (clk'event and clk = '1' and hz10_en = '1') then     
+            if (bp = '1' and bp_precedent = '1') then           -- Lors d'un front montant d'horloge nous comparons la valeur actuel et la valeur précédente du bouton (toute les 100 ms)
                 bpfiltre <= '1';
             end if;
-            if (bp = '1') then
+            if (bp = '1') then                      -- Nous associons la valeur actuelle du bouton à la valeur précédente
                 bp_precedent <= '1';
             end if;
             if (bp = '0') then

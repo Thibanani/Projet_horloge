@@ -409,7 +409,7 @@ begin
 --        end if;
 --    end process Animation;
     
-    Gestion_secondes : process (hz3600)                 -- Process permettant la gestion des secondes sur les bargraphs
+    Gestion_secondes : process (bargraphactif,sw_cumul,us,ds)                 -- Process permettant la gestion des secondes sur les bargraphs
     begin
         if (sw_cumul = '1') then                        -- Condition permettant d'activer le cumul des secondes en fonction du switch cumul
             case (bargraphactif) is
@@ -898,7 +898,7 @@ begin
         end if;
     end process Point_décimal;
     
-    Affichage_Point_décimal : process (digitactif)  -- Process permettant l'affichage du point décimal à l'aide du signal inter_pointdecimal
+    Affichage_Point_décimal : process (digitactif,inter_pointdecimal)  -- Process permettant l'affichage du point décimal à l'aide du signal inter_pointdecimal
     begin
         if (digitactif = "01") then
             pointdecimal <= inter_pointdecimal;
